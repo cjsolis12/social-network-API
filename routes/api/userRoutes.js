@@ -1,11 +1,9 @@
 const router = require('express').Router();
-
+const { getUsers } = require('../../controllers/userController')
 
 
 //GET all users
-router.get('/',(req,res)=>{
-    res.json({ message: "great work"})
-})
+router.get('/', getUsers)
 
 //GET one user
 router.get('/',(req,res)=>{
