@@ -1,5 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv').config()
+//Route Response error middleware
+const {errorHandler} = require('./middleware/errorMiddleware')
 const db = require('./config/connection')
 const routes = require ('./routes')
 
@@ -11,6 +13,7 @@ const port = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(routes);
+app.use(errorHandler)
 
 
 

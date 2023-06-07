@@ -1,32 +1,38 @@
+const asyncHandler = require('express-async-handler')
+
 //GET all users
 //GET api/users
-const getUsers = (req, res) => {
+const getUsers = asyncHandler(async(req, res) => {
   res.json({ message: "testing controller function" });
-};
+});
 
 //GET one user
 //GET api/users/:id
-const getSingleUser = (req, res) => {
+const getSingleUser = asyncHandler(async (req, res) => {
   res.json({ message: "testing controller function for one user" });
-};
+});
 
-//POST a new user
+// create a new user
 //POST api/users/
-const createUser = (req, res) => {
+const createUser = asyncHandler(async (req, res) => {
+    //add body for username and email
+    if(!req.body.username){
+        res.status(400).json({ message: "missing info"})
+    }
   res.json({ message: "created a new user" });
-};
+});
 
 //PUT update user
 //PUT api/users/:id
-const updateUser = (req, res) => {
+const updateUser = asyncHandler(async (req, res) => {
   res.json({ message: `updated: ${req.params.id}` });
-};
+});
 
 //DELETE a user
 //DELETE api/users/:id
-const deleteUser = (req, res) => {
+const deleteUser = asyncHandler(async (req, res) => {
   res.json({ message: `deleted: ${req.params.id}` });
-};
+});
 
 module.exports = {
   getUsers,
