@@ -12,11 +12,11 @@ const getThoughts = asyncHandler(async (req, res) => {
   //GET api/thoughts/:id
   const getThought = async (req, res, next) => {
     try {
-      const user = await User.findOne({ _id: req.params.id }).select("-__v");
-      if (!user) {
-        return res.status(404).json({ message: "No user with that id" });
+      const thought = await Thought.findOne({ _id: req.params.id }).select("-__v");
+      if (!thought) {
+        return res.status(404).json({ message: "No thought with that id" });
       }
-      res.json(user)
+      res.json(thought)
     } catch(err) {
       next(err)
     }
