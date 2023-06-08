@@ -54,9 +54,17 @@ const updateUser = async (req, res) => {
 
 //DELETE a user
 //DELETE api/users/:id
-const deleteUser = asyncHandler(async (req, res) => {
-  res.json({ message: `deleted: ${req.params.id}` });
-});
+const deleteUser = async (req, res) => {
+  try{
+    const deleteUser = await User.findOneAndRemove({ _id:req.params.id})
+    if(!deleteUser){
+      return res.status(404).json({ message: "No user with that id"})
+    }
+  }catch(err) {
+      res.status(500).json(err);
+  }
+  
+};
 
 module.exports = {
   getUsers,
