@@ -57,5 +57,8 @@ thoughtSchema.virtual("reactionCount").get(function () {
 });
 
 
+//Initialize and export though model with reaction subdocument
 
+const Thought = model("Thought", thoughtSchema )
+module.exports = Thought;
 
