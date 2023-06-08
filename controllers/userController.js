@@ -1,9 +1,9 @@
-const asyncHandler = require('express-async-handler')
-const { User, Thought } = require('../models')
+const asyncHandler = require("express-async-handler");
+const { User, Thought } = require("../models");
 
 //GET all users
 //GET api/users
-const getUsers = asyncHandler(async(req, res) => {
+const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find();
   res.json({ users });
 });
@@ -11,16 +11,24 @@ const getUsers = asyncHandler(async(req, res) => {
 //GET one user
 //GET api/users/:id
 const getSingleUser = async (req, res) => {
-  res.json({ message: "testing controller function for one user" });
+  try {
+    const user = await User.findOne({ _id: req.params.id }).select("-__v");
+    if (!user) {
+      return res.status(404).json({ message: "No user with that id" });
+    }
+    res.json(user)
+  } catch {
+    res.status(500).json(err)
+  }
 };
 
 // create a new user
 //POST api/users/
 const createUser = async (req, res) => {
-  try{
+  try {
     const user = await User.create(req.body);
-    res.json(user)
-  } catch (err){
+    res.json(user);
+  } catch (err) {
     res.status(500).json(err);
   }
 };
@@ -28,19 +36,19 @@ const createUser = async (req, res) => {
 //PUT update user
 //PUT api/users/:id
 const updateUser = async (req, res) => {
-  try{
+  try {
     const updatedUser = await User.findOneAndUpdate(
-      {_id: req.params.userId},
+      { _id: req.params.userId },
       req.body,
-      { new: true}
-    )
+      { new: true }
+    );
 
-  if(!updatedUser){
-    res.status(404).json({ message: 'No user with this id'})
-  }
-    res.json(updatedUser)
-  } catch (err){
-    res.status(500).json(err)
+    if (!updatedUser) {
+      res.status(404).json({ message: "No user with this id" });
+    }
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json(err);
   }
 };
 
