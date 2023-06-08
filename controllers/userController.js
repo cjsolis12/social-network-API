@@ -27,9 +27,22 @@ const createUser = async (req, res) => {
 
 //PUT update user
 //PUT api/users/:id
-const updateUser = asyncHandler(async (req, res) => {
-  res.json({ message: `updated: ${req.params.id}` });
-});
+const updateUser = async (req, res) => {
+  try{
+    const updatedUser = await User.findOneAndUpdate(
+      {_id: req.params.userId},
+      req.body,
+      { new: true}
+    )
+
+  if(!updatedUser){
+    res.status(404).json({ message: 'No user with this id'})
+  }
+    res.json(updatedUser)
+  } catch (err){
+    res.status(500).json(err)
+  }
+};
 
 //DELETE a user
 //DELETE api/users/:id
