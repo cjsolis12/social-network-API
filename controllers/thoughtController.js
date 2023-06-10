@@ -76,10 +76,26 @@ const getThoughts = asyncHandler(async (req, res) => {
       if(!thought){
         return res.status(404).json ({message: 'No thought with that id'})
       }
-      console.log(req.params)
       res.json(thought)
     }catch(err){
       res.status(500).json(err)
+    }
+  }
+
+  //Delete a reaction
+  const deleteReaction = async (req, res) => {
+    try{
+      const thought = await Thought.findOneAndUpdate(
+        {_id: req.params.id},
+        { $pull: { reactions: { reactionId: req.params.reactionId } } },
+        { runValidators: true, new: true}
+      );
+      if(!thought) {
+        return res.status(404).json({ message: 'No thought with that id'})
+      }
+      res.json(thought)
+    } catch(err){
+      res.status(500).json(err);
     }
   }
   
@@ -89,6 +105,7 @@ const getThoughts = asyncHandler(async (req, res) => {
     createThought,
     updateThought,
     deleteThought,
-    addReaction
+    addReaction,
+    deleteReaction
   };
   
