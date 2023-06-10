@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const { Thought } = require("../models");
+const { Thought, User } = require("../models");
 
 //GET all thoughts
 //GET api/thoughts
@@ -27,6 +27,15 @@ const getThoughts = asyncHandler(async (req, res) => {
   const createThought = async (req, res) => {
     try {
       const thought = await Thought.create(req.body);
+      //get user associated with the thought
+      const user = await User.findOneAndUpdate(
+        {_id: req.body.userId},
+        {$push: {thoughts: thought._id}},
+        {new: true}
+      )
+      if(!user){
+        throw new Error('User not found')
+      }
       res.json(thought);
     } catch (err) {
       res.status(500).json(err);
