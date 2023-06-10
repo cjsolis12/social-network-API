@@ -66,10 +66,13 @@ const deleteUser = async (req, res) => {
   
 };
 
+
+
 module.exports = {
   getUsers,
   getSingleUser,
   createUser,
   updateUser,
   deleteUser,
+  
 };
