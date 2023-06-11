@@ -19,7 +19,7 @@ router.route("/:id")
 .delete(deleteThought);
 
 //add reaction to thought
-router.route('/:id/reaction').put(addReaction)
+router.route('/:id/reaction').post(addReaction)
 
 //delete reaction by id
 router.route('/:id/reaction/:reactionId').delete(deleteReaction)

@@ -99,12 +99,15 @@ const deleteFriend = async (req, res) => {
       { $pull: { friends: friendId } },
       { new: true }
     );
-    console.log(req.params)
+
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    res.json(updatedUser);
+    const { friends } = updatedUser;
+    res.json({
+      message: 'Friend deleted successfully',
+      friends: friends,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json(err);

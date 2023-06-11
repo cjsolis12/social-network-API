@@ -2,28 +2,28 @@ const { Schema, model, mongo, default: mongoose } = require("mongoose");
 
 //Reaction Schema
 const reactionSchema = new Schema({
-    reactionId: {
-      type: mongoose.Schema.Types.ObjectId,
-      default: () => new mongoose.Types.ObjectId(),
+  reactionId: {
+    type: mongoose.Schema.Types.ObjectId,
+    default: () => new mongoose.Types.ObjectId(),
+  },
+  reactionBody: {
+    type: String,
+    required: true,
+    minlength: 1,
+    maxlength: 280,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    get: function (timestamp) {
+      return new Date(timestamp).toLocaleString();
     },
-    reactionBody: {
-      type: String,
-      required: true,
-      minlength: 1,
-      maxlength: 280,
-    },
-    username: {
-      type: String,
-      required: true,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: function (timestamp) {
-        return new Date(timestamp).toLocaleString();
-      },
-    },
-  });
+  },
+});
 //Schema to create thought model
 const thoughtSchema = new Schema(
   {
@@ -59,6 +59,6 @@ thoughtSchema.virtual("reactionCount").get(function () {
 
 //Initialize and export though model with reaction subdocument
 
-const Thought = model("Thought", thoughtSchema )
+const Thought = model("Thought", thoughtSchema)
 module.exports = Thought;
 
