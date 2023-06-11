@@ -65,9 +65,9 @@ const getThoughts = asyncHandler(async (req, res) => {
   //DELETE api/thoughts/:id
   const deleteThought = async (req, res) => {
     try{
-      const deleteUser = await User.findOneAndRemove({ _id:req.params.id})
-      if(!deleteUser){
-        return res.status(404).json({ message: "No user with that id"})
+      const deleteThought = await Thought.findOneAndRemove({ _id:req.params.id})
+      if(!deleteThought){
+        return res.status(404).json({ message: "No thought with that id"})
       }
     }catch(err) {
         res.status(500).json(err);
